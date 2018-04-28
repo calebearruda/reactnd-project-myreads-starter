@@ -2,6 +2,7 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import BooksList from './BooksList'
+import SearchBooks from './SearchBooks'
 import './App.css'
 
 class BooksApp extends React.Component {
@@ -10,27 +11,18 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount() {
-    this.updateListBooks()
-  }
-
-  updateListBooks = () => {
     BooksAPI.getAll().then((books) => {
       this.setState({ books: books })
     })
   }
 
   updateBook = (book, shelf) => {
-    if (shelf === 'none') return
-    this.setState((state => ({
-        books: state.books.map((b) => {
-          if (b.id === book.id) {
-            b.shelf = shelf
-          }
-          return b
-        })
-      })
-    ))
-    BooksAPI.update(book, shelf)
+    book.shelf = shelf
+    BooksAPI.update(book, shelf).then(() => {
+      this.setState(state => ({
+        books: state.books.filter(b => b.id !== book.id).concat(book)
+      }))
+    })
   }
 
   render() {
@@ -38,6 +30,9 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route exact path="/" render={() => (
           <BooksList books={this.state.books} onChangeShelf={this.updateBook} />
+        )}/>
+        <Route path="/search" render={({ history }) => (
+          <SearchBooks books={this.state.books} onChangeShelf={this.updateBook} />
         )}/>
       </div>
     )

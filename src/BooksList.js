@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import Shelfs from './Shelfs'
 
 class BooksList extends Component {
@@ -13,7 +14,7 @@ class BooksList extends Component {
               <Shelfs books={this.props.books} onChangeShelf={this.props.onChangeShelf}/>
             </div>
             <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+              <Link to="/search">Add a book</Link>
             </div>
           </div>
       </div>
