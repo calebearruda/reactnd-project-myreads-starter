@@ -28,11 +28,9 @@ class Book extends Component {
             )}
             <div className="book-shelf-changer">
               <select value={book.shelf} onChange={(e) => this.onChangeShelf(e, book)}>
+                <option value="none" disabled>Move to...</option>
                 {!printNone && (
-                  <option value="none" default>Move to...</option>
-                )}
-                {printNone && (
-                  <option value="none" disabled>Move to...</option>
+                  <option value="none" default>None</option>
                 )}
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
