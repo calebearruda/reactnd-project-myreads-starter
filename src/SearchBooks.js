@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import * as BooksAPI from './BooksAPI'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { Debounce } from 'react-throttle'
 import Book from './Book'
 
 class SearchBooks extends Component {
@@ -53,10 +54,9 @@ class SearchBooks extends Component {
           <Link to="/" className="close-search">Close</Link>
           <div className="search-books-input-wrapper">
             <input type="text" 
-                   placeholder="Search by title or author"
-                   value={query}
-                   onChange={event => this.onChangeQuery(event.target.value)}
-            />
+                  placeholder="Search by title or author"
+                  value={query}
+                  onChange={(event) => this.onChangeQuery(event.target.value)}/>
           </div>
         </div>
         <div className="search-books-results">
